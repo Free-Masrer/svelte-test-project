@@ -4,17 +4,17 @@
 
   let messages = [
     {
-      text: "How are you?",
+      text: "Hey there! 👋 ",
       timestamp: new Date(Date.now() - 100000),
       type: "incoming",
     },
     {
-      text: "I am good, thanks!",
+      text: "Hey",
       timestamp: new Date(Date.now() - 50000),
       type: "outgoing",
     },
     {
-      text: "What do you think about Sunrider?",
+      text: "Would you like me to assist you in choosing best nutrition products??",
       timestamp: new Date(Date.now() - 10000),
       type: "incoming",
     },
@@ -31,7 +31,7 @@
 </script>
 
 <main>
-  <div>
+  <div class="text-container">
     <ChatDisplay {messages} />
   </div>
   <div class="input-container">
@@ -43,5 +43,8 @@
   .input-container {
     padding-top: 16px;
     background: #fff;
+  }
+  .text-container {
+    width: 520px;
   }
 </style>

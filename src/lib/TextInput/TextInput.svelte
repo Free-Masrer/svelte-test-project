@@ -1,6 +1,7 @@
 <script>
   import NorthIcon from "../../assets/iconLibrary/NorthIcon.svelte";
   export let sendMessage;
+  export let isInputDisabled = false;
 
   let text = "";
   let isActive = false;
@@ -8,23 +9,16 @@
 
   function handleInput(event) {
     text = event.target.value;
-    if (text.trim() !== "") {
-      isButtonDisabled = false;
-    } else {
-      isButtonDisabled = true;
-    }
+    isButtonDisabled = text.trim() === "";
   }
 
   function handleFocus() {
-    isButtonDisabled = true;
     isActive = true;
   }
 
   function handleBlur() {
-    if (text.trim() === "") {
-      isActive = false;
-      isButtonDisabled = true;
-    }
+    isActive = text.trim() !== "";
+    isButtonDisabled = text.trim() === "";
   }
 
   function handleSubmit() {
@@ -39,22 +33,23 @@
 
 <form on:submit|preventDefault={handleSubmit}>
   <div class="chat-field">
-    <div class="input-wrapper">
+    <div
+      aria-disabled={isInputDisabled}
+      class={isActive ? "input-wrapper-active input-wrapper" : "input-wrapper"}
+      class:disabled={isInputDisabled}
+    >
       <input
         type="text"
         bind:value={text}
         on:input={handleInput}
         on:focus={handleFocus}
         on:blur={handleBlur}
+        disabled={isInputDisabled}
         placeholder="Ask Assistant"
         class="text-input"
       />
       {#if isActive}
-        <button
-          type="submit"
-          disabled={isButtonDisabled}
-          class={isButtonDisabled ? "disabled" : "send-button"}
-        >
+        <button type="submit" disabled={isButtonDisabled}>
           <NorthIcon className={isButtonDisabled ? "icon-disabed" : "icon"} />
         </button>
       {/if}
@@ -76,7 +71,16 @@
     align-items: center;
     gap: 8px;
 
-    background: var(--white, #fff);
+    background: #fff;
+  }
+  .input-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    border-radius: 10px;
+    border: 1px solid #473fff;
+    background: #fff;
   }
 
   .input-wrapper .text-input::placeholder {
@@ -96,25 +100,34 @@
     color: #000;
     text-overflow: ellipsis;
 
-    /* Body-2/regular */
     font-family: Figtree;
     font-size: 15px;
     font-style: normal;
     font-weight: 400;
     line-height: 20px; /* 133.333% */
   }
-  .input-wrapper {
-    position: relative;
-    display: flex;
-    align-items: center;
-    width: 100%;
-    border-radius: 10px;
-
-    border: 1px solid var(--gradient-gradient-indigo, #473fff);
-
-    background: var(--white, #fff);
+  .input-wrapper,
+  .text-input {
+    transition: background-color 0.3s ease;
   }
-  .send-button {
+
+  .input-wrapper:disabled,
+  .input-wrapper.disabled {
+    background-color: #f6f7f4;
+    border-color: #c9cac6;
+    border: 1px solid #f6f7f4;
+    color: #c9cac6 !important;
+  }
+
+  .input-wrapper-active {
+    border: 1px solid #e7e8e5;
+  }
+
+  .input-wrapper-active .text-input::placeholder {
+    color: #a6a7a4;
+  }
+
+  button {
     position: absolute;
     right: 5px;
     width: 32px;
@@ -126,17 +139,27 @@
     border-radius: 100px;
     background: #5840ff;
   }
+  button:disabled {
+    position: absolute;
+    right: 5px;
+    border: none;
+    background: none;
+    padding: 5px;
+    pointer-events: none;
+    cursor: not-allowed;
+  }
 
   .text-input {
     flex-grow: 1;
-    padding: 8px 16px;
+    padding: 12px 48px 12px 16px;
+    caret-color: #5840ff;
     background: none;
     border: none;
     outline: none;
   }
 
   .help-text {
-    color: var(--neutral-10, #797a75);
+    color: #797a75;
     text-align: center;
     font-feature-settings:
       "clig" off,
@@ -148,14 +171,10 @@
     font-weight: 400;
     line-height: 16px; /* 145.455% */
   }
-
-  .disabled {
-    position: absolute;
-    right: 5px;
-    border: none;
-    background: none;
-    cursor: pointer;
-    padding: 5px;
-    pointer-events: none;
+  .text-input:disabled,
+  .text-input:disabled::placeholder,
+  .input-wrapper:disabled,
+  .input-wrapper.disabled::placeholder {
+    color: #c9cac6;
   }
 </style>
