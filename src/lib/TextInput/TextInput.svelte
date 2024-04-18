@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
   import NorthIcon from "../../assets/iconLibrary/NorthIcon.svelte";
   export let sendMessage;
   export let isInputDisabled = false;
@@ -55,7 +55,7 @@
       {/if}
     </div>
     <span class="help-text">
-      Shopping Assistant does not provide any medical advice
+      Shopping Assistant does not provide any medical advice
     </span>
   </div>
 </form>

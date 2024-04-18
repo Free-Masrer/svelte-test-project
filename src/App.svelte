@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
   import TextInput from "./lib/TextInput/TextInput.svelte";
   import ChatDisplay from "./lib/ChatDisplay/ChatDisplay.svelte";
 

@@ -1,14 +1,15 @@
-<script>
-    export let messages;
-  </script>
-  
-  <div class="chat-display">
-    {#each messages as message}
-    <p class="{message.type === 'incoming' ? 'incoming' : 'outgoing'}">
-        <strong>{message.timestamp.toLocaleTimeString()}:</strong> {message.text}
-      </p>
-    {/each}
-  </div>
+<script lang="ts">
+  export let messages;
+</script>
+
+<div class="chat-display">
+  {#each messages as message}
+    <p class={message.type === "incoming" ? "incoming" : "outgoing"}>
+      <strong>{message.timestamp.toLocaleTimeString()}:</strong>
+      {message.text}
+    </p>
+  {/each}
+</div>
 
 <style>
   .chat-display {
@@ -26,7 +27,7 @@
     border-radius: 10px;
     width: fit-content;
     max-width: 80%;
-    color: '#000';
+    color: "#000";
   }
   .incoming {
     align-self: flex-start;
