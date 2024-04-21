@@ -1,36 +1,54 @@
 <script lang="ts">
-  import TextInput from "./lib/TextInput/TextInput.svelte";
-  import ChatDisplay from "./lib/ChatDisplay/ChatDisplay.svelte";
+  import TextInput from "./lib/components/TextInput.svelte";
+  import ChatDisplay from "./lib/components/ChatDisplay.svelte";
+  import type { Message } from "./lib/types/message";
 
-  let messages = [
+  let messages: Message[] = [
     {
-      text: "Hey there! 👋 ",
+      id: "1234456",
+      text: "Hey there! 👋 Would you like me to assist you in choosing best nutrition products??",
       timestamp: new Date(Date.now() - 100000),
-      type: "incoming",
+      type: "Assistant",
     },
     {
-      text: "Hey",
+      id: "1236575675",
+      text: "Could you provide information about your Mental Clarity & Sleep products?",
       timestamp: new Date(Date.now() - 50000),
-      type: "outgoing",
+      type: "User",
+      status: "success",
     },
     {
-      text: "Would you like me to assist you in choosing best nutrition products??",
+      id: "5345234545",
+      text: "Sure! Would you like to answer acouple of questions first to get a personalised recommendations based on your needs?",
       timestamp: new Date(Date.now() - 10000),
-      type: "incoming",
+      type: "Assistant",
+    },
+    {
+      id: "123657422345675",
+      text: "I want to buy some protein but I dont like Vanilla",
+      timestamp: new Date(Date.now() - 50000),
+      type: "User",
+      status: "error",
     },
   ];
 
-  function sendMessage(text) {
-    const newMessage = {
-      text: text,
+  function generateId() {
+    return Date.now().toString(36) + Math.random().toString(36).substr(2, 5);
+  }
+
+  function sendMessage(text: string): void {
+    const newMessage: Message = {
+      id: generateId(),
+      text,
       timestamp: new Date(),
-      type: "outgoing",
+      type: "User",
+      status: "loading",
     };
     messages = [...messages, newMessage];
   }
 </script>
 
-<main>
+<main class="container">
   <div class="text-container">
     <ChatDisplay {messages} />
   </div>
@@ -40,8 +58,13 @@
 </main>
 
 <style>
+  .container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
   .input-container {
-    padding-top: 16px;
     background: #fff;
   }
   .text-container {

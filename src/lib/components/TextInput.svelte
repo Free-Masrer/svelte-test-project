@@ -1,27 +1,30 @@
 <script lang="ts">
-  import NorthIcon from "../../assets/iconLibrary/NorthIcon.svelte";
-  export let sendMessage;
+  import type { SendMessageFunction } from "../types/message";
+  import NorthIcon from "./IconLibrary/IconNorth.svelte";
+
+  export let sendMessage: SendMessageFunction;
   export let isInputDisabled = false;
 
-  let text = "";
-  let isActive = false;
-  let isButtonDisabled = true;
+  let text: string = "";
+  let isActive: boolean = false;
+  let isButtonDisabled: boolean = true;
 
-  function handleInput(event) {
-    text = event.target.value;
+  function handleInput(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    text = input.value;
     isButtonDisabled = text.trim() === "";
   }
 
-  function handleFocus() {
+  function handleFocus(): void {
     isActive = true;
   }
 
-  function handleBlur() {
+  function handleBlur(): void {
     isActive = text.trim() !== "";
     isButtonDisabled = text.trim() === "";
   }
 
-  function handleSubmit() {
+  function handleSubmit(): void {
     if (text.trim()) {
       sendMessage(text);
       text = "";
@@ -133,11 +136,11 @@
     width: 32px;
     height: 32px;
     border: none;
-    background: none;
     cursor: pointer;
-    padding: 5px;
+    padding: 6px;
     border-radius: 100px;
-    background: #5840ff;
+    background-color: #5840ff;
+    transition: background-color 0.3s ease;
   }
   button:disabled {
     position: absolute;
