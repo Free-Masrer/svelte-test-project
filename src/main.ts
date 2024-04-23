@@ -1,5 +1,5 @@
-import "./app.css";
-import App from "./App.svelte";
+import "./global.css";
+import App from "./lib/components/App.svelte";
 
 const newElement = document.createElement("div");
 newElement.id = "treel-chat";

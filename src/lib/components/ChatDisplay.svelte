@@ -1,8 +1,9 @@
 <script lang="ts">
   import MessageComponent from "./MessageComponent.svelte";
-  import type { Message } from "../types/message";
   import TypingIndicator from "./TypingIndicator.svelte";
   import FailedToLoad from "./FailedToLoad.svelte";
+  import IconSpinner from "./IconLibrary/IconSpinner.svelte";
+  import type { Message } from "../types/message.js";
   export let messages: Message[];
 
   function handleRetry(messageId: string) {
@@ -21,13 +22,20 @@
     messages = messages.filter((m) => m.id !== messageId);
     messages = [...messages];
   }
+
+  function isMessageWithTheSameOrigin(index: number, type: Message["type"]) {
+    const prevMessage: Message | undefined = messages[index - 1];
+    return prevMessage && prevMessage.type === type;
+  }
 </script>
 
 <div class="chat-display">
   <FailedToLoad />
+  <IconSpinner />
 
-  {#each messages as message (message.timestamp)}
+  {#each messages as message, index (message.id)}
     <MessageComponent
+      hideAvatar={isMessageWithTheSameOrigin(index, message.type)}
       {message}
       onRetry={() => handleRetry(message.id)}
       onDelete={() => handleDelete(message.id)}
@@ -38,15 +46,22 @@
 
 <style>
   .chat-display {
-    padding: 10px;
+    padding: 20px;
     background-color: #fff;
-    height: 524px;
-    max-height: 524px;
+    height: 100%;
     overflow-y: scroll;
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
-    align-items: center;
     gap: 24px;
+
+    & button {
+      padding: 8px 16px;
+      border: none;
+      background-color: #473fff;
+      color: #fff;
+      border-radius: 4px;
+      cursor: pointer;
+    }
   }
 </style>

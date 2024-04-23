@@ -56,4 +56,10 @@
       opacity: 1;
     }
   }
+
+  @media screen and (max-width: 600px) {
+    .indicatorContainer {
+      width: 100%;
+    }
+  }
 </style>

@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { DeleteFunction, RetryFunction } from "../types/message";
+  import type { DeleteFunction, RetryFunction } from "../types/message.js";
   import IconCross from "./IconLibrary/IconCross.svelte";
   import IconRestore from "./IconLibrary/IconRestore.svelte";
 
@@ -24,5 +24,15 @@
     cursor: pointer;
     border: none;
     background: none;
+  }
+  @media screen and (max-width: 600px) {
+    .errors-button {
+      gap: 15px;
+      padding: 0px;
+      align-items: center;
+    }
+    .errors-button button {
+      padding: 0px;
+    }
   }
 </style>

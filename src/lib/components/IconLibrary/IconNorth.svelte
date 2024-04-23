@@ -30,12 +30,18 @@
 </svg>
 
 <style>
-  .icon-disabed {
-    fill: #a6a7a4;
-    color: #a6a7a4;
-  }
   .icon {
     fill: #fff;
     color: #fff;
+  }
+  .icon-disabled {
+    fill: #a6a7a4;
+    color: #a6a7a4;
+  }
+  @media screen and (max-width: 600px) {
+    .icon-disabled {
+      fill: #d9d9d9;
+      color: #d9d9d9;
+    }
   }
 </style>

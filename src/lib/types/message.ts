@@ -2,12 +2,15 @@ export type MessageOrigin = "Assistant" | "User";
 
 export type MessageStatus = "success" | "error" | "loading";
 
-export interface Message {
-  id: string;
+export interface UIMessage {
   text: string;
-  timestamp: Date;
   type: MessageOrigin;
-  status?: MessageStatus;
+  status: MessageStatus;
+}
+
+export interface Message extends UIMessage {
+  id: string;
+  timestamp: string;
 }
 
 export type SendMessageFunction = (text: string) => void;
